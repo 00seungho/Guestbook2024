@@ -1,9 +1,16 @@
 package kr.ac.kopo.kr.guestbook2024.repository;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import kr.ac.kopo.kr.guestbook2024.entity.Guestbook;
+import kr.ac.kopo.kr.guestbook2024.entity.QGuestbook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -36,6 +43,38 @@ public class GuestbookRepositoryTest {
           guestbookRepository.save(guestbook);
        }
 
+    }
+    //단일항목 검색만
+    @Test
+    public void testQuery1(){
+        Pageable pageable = PageRequest.of(0,10, Sort.by("gno").descending());
+        QGuestbook qGustbook = QGuestbook.guestbook;
+        String keyword = "1";
+        BooleanBuilder builder = new BooleanBuilder();
+        BooleanExpression exp1 =  qGustbook.title.contains(keyword);
+        builder.and(exp1);
+        Page<Guestbook> result = guestbookRepository.findAll(builder,pageable);
+        result.stream().forEach(guestbook -> {
+            System.out.println(guestbook);
+        });
+    }
+    // 다중 항목 검색 및 제한 조건식
+    @Test
+    public void testQuery2(){
+        Pageable pageable = PageRequest.of(0,10, Sort.by("gno").descending());
+        QGuestbook qGustbook = QGuestbook.guestbook;
+        String keyword = "2";
+        BooleanBuilder builder = new BooleanBuilder();
+        BooleanExpression exp1 =  qGustbook.title.contains(keyword);
+        BooleanExpression exp2 =  qGustbook.content.contains(keyword);
+        BooleanExpression exp =  exp1.or(exp2);
+        builder.and(exp);
+        builder.and(qGustbook.gno.gt(100L));
+        Page<Guestbook> result = guestbookRepository.findAll(builder,pageable);
+        result.stream().forEach(guestbook -> {
+            System.out.println(guestbook);
+
+        });
     }
 
 }
