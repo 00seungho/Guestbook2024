@@ -73,7 +73,6 @@ public class GuestbookRepositoryTest {
         Page<Guestbook> result = guestbookRepository.findAll(builder,pageable);
         result.stream().forEach(guestbook -> {
             System.out.println(guestbook);
-
         });
     }
 
