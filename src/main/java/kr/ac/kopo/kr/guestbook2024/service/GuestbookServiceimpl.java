@@ -37,6 +37,7 @@ public class GuestbookServiceimpl implements GuestbookService{
     @Override
     public void modify(GuestbookDTO dto) {
         Optional<Guestbook> result = repository.findById(dto.getGno());
+
         if(result.isPresent()){
             Guestbook entity = result.get();
             entity.changeTitle(dto.getTitle());
