@@ -10,6 +10,10 @@ public interface GuestbookService {
     Long register(GuestbookDTO dto);
     // 한 페이지에 보여질 글 목록(GuestbookDTO 객체)이 저장된 List정보를 갖고 있는 PageResultDTO객체 참조값을 반환하는 기능
     PageResuitDTO<GuestbookDTO,Guestbook> getList(PageRequestDTO requestDTO);
+    //글 수정기능
+    void modify(GuestbookDTO dto);
+    //글 삭제 기능
+    void remove(Long gno);
 
    GuestbookDTO read(Long gno);
     default Guestbook dtoToEntity(GuestbookDTO dto){
@@ -33,4 +37,5 @@ public interface GuestbookService {
 
         return dto;
     }
+
 }
