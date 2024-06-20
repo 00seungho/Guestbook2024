@@ -16,6 +16,27 @@
             </a>
             </span>
         </h1>
+        <!-- 검색 타입과 검색어를 입력할 수 있는 화면 구성 -->
+        <form action="/guestbook/list" method="get" id="searchForm">
+            <div>
+                <input type="hidden" name="page" value="1">
+                <div class="input-group">
+                    <select name="type" class="form-select">
+                        <option th:selected="${pageRequestDTO.type == null}">검색종류가 선택되지 않음</option>
+                        <option th:selected="${pageRequestDTO.type == 't'}" value="t">제목</option>
+                        <option th:selected="${pageRequestDTO.type == 'c'}" value="c">내용</option>
+                        <option th:selected="${pageRequestDTO.type == 'w'}" value="w">작성자</option>
+                        <option th:selected="${pageRequestDTO.type == 'tc'}" value="tc">제목+내용</option>
+                        <option th:selected="${pageRequestDTO.type == 'tcw'}" value="tcw">제목+내용+작성자</option>
+                    </select>
+                </div>
+                <input class="input-group" type="text" name="keyword" th:value="${pageRequestDTO.keyword}">
+                <div class="input-group">
+                    <button class="btn btn-outline-secondary btn-primary btn-search" type="button">Search</button>
+                    <button class="btn btn-outline-secondary btn-danger btn-cancel" type="button">Cancel</button>
+                </div>
+            </div>
+        </form>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -79,6 +100,14 @@
     if(msg){
         $(".modal").show();
     }
+
+    var from = $("#searchForm");
+    $(".btn-search").click(function (e){
+        from.submit();
+    });
+    $(".btn-cancel").click(function (e){
+        from.empty().submit();
+    });
 
 </script>
 </html>
