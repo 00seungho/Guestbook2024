@@ -1,5 +1,6 @@
 package kr.ac.kopo.kr.guestbook2024.service;
 
+import com.querydsl.core.BooleanBuilder;
 import kr.ac.kopo.kr.guestbook2024.dto.GuestbookDTO;
 import kr.ac.kopo.kr.guestbook2024.dto.PageRequestDTO;
 import kr.ac.kopo.kr.guestbook2024.dto.PageResuitDTO;
@@ -14,6 +15,8 @@ public interface GuestbookService {
     void modify(GuestbookDTO dto);
     //글 삭제 기능
     void remove(Long gno);
+
+    BooleanBuilder getSearch(PageRequestDTO requestDTO);
 
    GuestbookDTO read(Long gno);
     default Guestbook dtoToEntity(GuestbookDTO dto){

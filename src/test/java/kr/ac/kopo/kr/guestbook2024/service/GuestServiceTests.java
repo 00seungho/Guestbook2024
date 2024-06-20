@@ -53,5 +53,28 @@ public class GuestServiceTests {
         for (Integer pageNum: resultDTO.getPageList()){
             System.out.println(pageNum.intValue());
         }
+
+
+    }
+    @Test
+    public void testSearchList2() {
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(25)
+                .size(10)
+                .type("tc")
+                .keyword("7")
+                .build();
+        PageResuitDTO<GuestbookDTO, Guestbook> resultDTO = service.getList(pageRequestDTO);
+
+        System.out.println("start: " + resultDTO.getStart());
+        System.out.println("end: " + resultDTO.getEnd());
+        System.out.println("prev: " + resultDTO.isPrev());
+        System.out.println("next: " + resultDTO.isNext());
+        for (GuestbookDTO guestbookDTO : resultDTO.getDtoList()) {
+            System.out.println(guestbookDTO);
+        }
+        for (Integer pageNum : resultDTO.getPageList()) {
+            System.out.println(pageNum.intValue());
+        }
     }
 }
